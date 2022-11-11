@@ -20,6 +20,7 @@
   --col-p-200: #f7fa5e;
   --col-p-500: #c9fd0d;
   --col-p-700: #90ce00;
+  --col-p-900: #72a301;
   /* secondary colors */
   --col-s-200: #69e2ff;
   --col-s-500: #00b0ff;
@@ -69,6 +70,9 @@ main h1 {
   padding: 1rem 1rem 2rem 1rem;
   user-select: none;
 }
+main h2 {
+  color: var(--col-p-900);
+}
 main button {
   font-size: 1.25rem;
   padding: 1rem;
@@ -92,4 +96,34 @@ footer {
 footer p {
   color: var(--col-p-700);
   text-align: center;
+}
+#scoreBoard {
+  display: flex;
+  flex-direction: column;
+  background-color: hsl(0, 0%, 34%);
+  border-radius: 0.6rem;
+  list-style: none;
+  align-items: center;
+  padding-inline-start: 0px;
+}
+#scoreBoard li {
+  width: 10ch;
+  background-color: var(--col-p-200);
+  padding: 0.8rem;
+  margin: 0.8rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: var(--fw-black);
+  border-radius: 0.4rem;
+  user-select: none;
+}
+#scoreBoard li:nth-child(odd) {
+  background-color: var(--col-p-500);
+}
+.scoreArea {
+  align-items: center;
+}
+.scoreArea button {
+  cursor: pointer;
+  min-width: 16rem;
 }

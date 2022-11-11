@@ -25,10 +25,13 @@ var h1Question = document.querySelector("#questionVisible");
 var timerUser = document.querySelector("#timerVisible")
 var rulesText = document.querySelector("#ruleText")
 var rightWrong = document.querySelector("#rightWrong")
-rulesText.setAttribute("style", "display: block;");
+var scoreBoard = document.querySelector("#scoreBoard");
+var tryAgain = document.querySelector("#tryAgainButt");
+rulesText.setAttribute("style", "display: block");
 timerUser.textContent = " ";
 h1Question.textContent = "Press start to test your web dev knowledge";
 startQuiz.setAttribute("style", "margin: 0 auto; min-width: 20rem");
+rightWrong.setAttribute("style", "color: #ffffff;");
 buttonA.setAttribute("style", "display: none;");
 buttonB.setAttribute("style", "display: none;");
 buttonC.setAttribute("style", "display: none;");
@@ -57,20 +60,52 @@ var questions = [
         correct: "C"
     },
     {
-        asking: "Question three?",
-        optionA: "<p>",
-        optionB: "<header>",
-        optionC: "<h1>",
-        optionD: "<div>",
+        asking: "How would I push my code to the main branch on Github?",
+        optionA: "git pull",
+        optionB: "git push origin main",
+        optionC: "git add -A",
+        optionD: "git branch",
         correct: "B"
     },
     {
-        asking: "Question four?",
-        optionA: "<p>",
-        optionB: "<header>",
-        optionC: "<h1>",
-        optionD: "<div>",
+        asking: "What helpful items should my README file include?",
+        optionA: "Screenshot",
+        optionB: "Usage instructions",
+        optionC: "Title",
+        optionD: "All of the above",
+        correct: "D"
+    },
+    {
+        asking: "What does HTML stand for?",
+        optionA: "Hypertext Markup Language",
+        optionB: "Handy Text Maximum Language",
+        optionC: "How The Moon Looks",
+        optionD: "Hierarchy Toned Making Linguistics",
         correct: "A"
+    },
+    {
+        asking: "Which tag is used in HTML to link javascript code?",
+        optionA: "<javascript>",
+        optionB: "<sp>",
+        optionC: "<script>",
+        optionD: "<java>",
+        correct: "C"
+    },
+    {
+        asking: "What is always used with an image tag?",
+        optionA: "size",
+        optionB: "aspect-ratio",
+        optionC: "src",
+        optionD: "color",
+        correct: "C"
+    },
+    {
+        asking: "what does hex code look like?",
+        optionA: "hsl (128, 20%, 90%)",
+        optionB: "#332f05",
+        optionC: "rgb (67, 33, 255)",
+        optionD: "alpha",
+        correct: "B"
     }
 ]
 //start the timer
@@ -80,6 +115,8 @@ function runTimer() {
         timeLeft--;
         // when time is over
         if (timeLeft < 1) {
+            window.localStorage.setItem('finalScore', timeLeft)
+            window.location.href = "./highScores.html";
             clearInterval(interval);
         }
     }, 1000);
@@ -98,27 +135,32 @@ function showQuestion(questions) {
 }
 //runs when you choose the correct answer
 function correctAnswer() {
-    rulesText.setAttribute("style", "display: block; font-size: 2rem;");
-    rulesText.textContent = "Correct!"
+    rightWrong.setAttribute("style", "display: block; font-size: 2rem;");
+    rightWrong.textContent = "Correct!"
     currentQuestion++;
     if (currentQuestion === questions.length) {
+        window.localStorage.setItem('finalScore', timeLeft)
         window.location.href = "./highScores.html";
     }
     nextQuestion()
     setTimeout(() => {
-        rulesText.setAttribute("style", "display: none;");
-    }, 2000)
+        rightWrong.setAttribute("style", "display: none;");
+    }, 3000)
 }
 //runs when you choose the wrong answer
 function wrongAnswer() {
-    rulesText.setAttribute("style", "display: block; font-size: 2rem;");
-    rulesText.textContent = "Wrong!"
+    rightWrong.setAttribute("style", "display: block; font-size: 2rem;");
+    rightWrong.textContent = "Wrong!"
+    currentQuestion++;
+    timeLeft -= 10;
     if (currentQuestion === questions.length) {
+        window.localStorage.setItem('finalScore', timeLeft)
         window.location.href = "./highScores.html";
     }
+    nextQuestion()
 }   setTimeout(() => {
-    rulesText.setAttribute("style", "display: none;");
-    }, 2000)
+    rightWrong.setAttribute("style", "display: none;");
+    }, 3000)
 //check if correct 
 function checkCorrectD(questions) {
     var correctChecked = questions[currentQuestion].correct
@@ -196,5 +238,11 @@ function runQuiz() {
 startQuiz.addEventListener("click", function() {
     console.log("clicked start");
     startQuiz.setAttribute("style", "display: none;");
+    runQuiz();
+});
+//click try again button
+tryAgain.addEventListener("click", function() {
+    console.log("clicked start");
+    window.location.href = "./index.html";
     runQuiz();
 });
