@@ -15,7 +15,7 @@
   /* element bg */
   --col-surface: hsl(0, 0%, 14%);
   /* one level up */
-  --col-surface-2: hsl(0, 0%, 22%);
+  --col-surface-2: hsl(0, 0%, 28%);
   /* primary colors */
   --col-p-200: #fdff58;
   --col-p-500: #c6ff00;
@@ -44,7 +44,17 @@ header {
 }
 header h3 {
   font-weight: var(--fw-regular);
+  color: var(--col-p-200);
+  transition: all ease-out 300ms;
+}
+header h3:nth-child(1):hover {
   color: var(--col-p-500);
+}
+header h3:nth-child(1):active {
+  color: var(--col-p-700);
+}
+header a {
+  text-decoration: none;  
 }
 main {
   margin: 2rem;
@@ -67,4 +77,9 @@ main button {
   box-shadow: 0.25rem 0.25rem var(--col-bg);
   border-radius: 0.4rem;
   max-width: 30rem;
+  cursor: pointer;
+  transition: all ease-out 300ms;
+}
+main button:hover {
+  background-color: var(--col-p-500);
 }
