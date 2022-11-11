@@ -24,6 +24,7 @@ var buttonD = document.querySelector("#buttD");
 var h1Question = document.querySelector("#questionVisible");
 var timerUser = document.querySelector("#timerVisible")
 var rulesText = document.querySelector("#ruleText")
+var rightWrong = document.querySelector("#rightWrong")
 rulesText.setAttribute("style", "display: block;");
 timerUser.textContent = " ";
 h1Question.textContent = "Press start to test your web dev knowledge";
@@ -32,31 +33,92 @@ buttonA.setAttribute("style", "display: none;");
 buttonB.setAttribute("style", "display: none;");
 buttonC.setAttribute("style", "display: none;");
 buttonD.setAttribute("style", "display: none;");
-var timeLeft = 100;
+var timeLeft = 120;
 var score = {
     playerName: [],
     playerScore: []
 };
-var questions = {
-    asking: [],
-    choiceA: [],
-    choiceB: [],
-    choiceC: [],
-    choiceD: [],
-    answerCorrect: []
-};
+var currentQuestion = 0;
+var questions = [
+    {
+        asking: "What does CSS stand for?",
+        optionA: "Cascading Shader System",
+        optionB: "Collapsing Style Sheets",
+        optionC: "Circular Selection System",
+        optionD: "Cascading Style Sheets",
+        correct: "D"
+    },
+    {
+        asking: "What tag would I use to create the largest header element in HTML?",
+        optionA: "<p>",
+        optionB: "<header>",
+        optionC: "<h1>",
+        optionD: "<div>",
+        correct: "C"
+    }
+]
+
 
 
 //start the timer
 function runTimer() {
+    console.log("runTimer has run");
     var interval = setInterval(function() {
-        // timeRemaining--;
         timerUser.textContent = "Time: " + timeLeft;
-    })
+        timeLeft--;
+        // when time is over
+        if (timeLeft === 0) {
+            clearInterval(interval);
+        }
+        //length of time interval in ms
+    }, 1000);
+}
+//sets the next question as the next currentQuestion integer
+function nextQuestion() {
+ showQuestion(questions[currentQuestion]);
+}
+//writes the next question and buttons
+function showQuestion(questions) {
+    h1Question.innerText = questions.asking
+    buttonA.innerText = questions.optionA
+    buttonB.innerText = questions.optionB
+    buttonC.innerText = questions.optionC
+    buttonD.innerText = questions.optionD
 }
 
-
-
+//check if correct 
+function checkCorrectD(questions) {
+    var correctChecked = questions[currentQuestion].correct
+    if (correctChecked === "D") {
+        console.log("correct!");
+    } else {
+        console.log("wrong!");
+    }
+}
+function checkCorrectC(questions) {
+    var correctChecked = questions[currentQuestion].correct
+    if (correctChecked === "C") {
+        console.log("correct!");
+    } else {
+        console.log("wrong!");
+    }  
+}
+function checkCorrectB(questions) {
+    var correctChecked = questions[currentQuestion].correct
+    if (correctChecked === "B") {
+        console.log("correct!");
+    } else {
+        console.log("wrong!");
+    }  
+}
+function checkCorrectA(questions) {
+    var correctChecked = questions[currentQuestion].correct
+    if (correctChecked === "A") {
+        console.log("correct!");
+    } else {
+        console.log("wrong!");
+    }  
+}
 //run the quiz
 function runQuiz() {
     runTimer();
@@ -66,11 +128,40 @@ function runQuiz() {
     buttonC.setAttribute("style", "display: block;");
     buttonD.setAttribute("style", "display: block;");
     rulesText.setAttribute("style", "display: none;");
-    h1Question.textContent = questions.asking[i];
+    nextQuestion()
+    console.log("Question: " + currentQuestion);
+    //click on answer
+    buttonA.addEventListener("click", function() {
+        console.log("it b click A");
+        checkCorrectA(questions)
+    })
+    buttonB.addEventListener("click", function() {
+        console.log("it b click B");
+        checkCorrectB(questions)
+    })
+    buttonC.addEventListener("click", function() {
+        console.log("it b click C");
+        checkCorrectC(questions)
+    })
+    buttonD.addEventListener("click", function() {
+        console.log("it b click D");
+        checkCorrectD(questions)
+    })
+    //check if correct
+    
+    //display right or wrong
+
+    //add to score
+
+    //update time
+
+    //go to next question
+    // currentQuestion++;
+
 }
 // click start button to start game
 startQuiz.addEventListener("click", function() {
-    console.log("click");
+    console.log("clicked start");
     startQuiz.setAttribute("style", "display: none;");
     runQuiz();
 });
