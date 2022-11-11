@@ -86,7 +86,7 @@ main button:hover {
 }
 footer {
   display: flex;
-  padding: 2rem;
+  padding: 1rem;
   justify-content: center;
 }
 footer p {

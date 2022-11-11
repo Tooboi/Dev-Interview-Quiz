@@ -55,22 +55,33 @@ var questions = [
         optionC: "<h1>",
         optionD: "<div>",
         correct: "C"
+    },
+    {
+        asking: "Question three?",
+        optionA: "<p>",
+        optionB: "<header>",
+        optionC: "<h1>",
+        optionD: "<div>",
+        correct: "B"
+    },
+    {
+        asking: "Question four?",
+        optionA: "<p>",
+        optionB: "<header>",
+        optionC: "<h1>",
+        optionD: "<div>",
+        correct: "A"
     }
 ]
-
-
-
 //start the timer
 function runTimer() {
-    console.log("runTimer has run");
     var interval = setInterval(function() {
         timerUser.textContent = "Time: " + timeLeft;
         timeLeft--;
         // when time is over
-        if (timeLeft === 0) {
+        if (timeLeft < 1) {
             clearInterval(interval);
         }
-        //length of time interval in ms
     }, 1000);
 }
 //sets the next question as the next currentQuestion integer
@@ -85,38 +96,60 @@ function showQuestion(questions) {
     buttonC.innerText = questions.optionC
     buttonD.innerText = questions.optionD
 }
-
+//runs when you choose the correct answer
+function correctAnswer() {
+    rulesText.setAttribute("style", "display: block; font-size: 2rem;");
+    rulesText.textContent = "Correct!"
+    currentQuestion++;
+    if (currentQuestion === questions.length) {
+        window.location.href = "./highScores.html";
+    }
+    nextQuestion()
+    setTimeout(() => {
+        rulesText.setAttribute("style", "display: none;");
+    }, 2000)
+}
+//runs when you choose the wrong answer
+function wrongAnswer() {
+    rulesText.setAttribute("style", "display: block; font-size: 2rem;");
+    rulesText.textContent = "Wrong!"
+    if (currentQuestion === questions.length) {
+        window.location.href = "./highScores.html";
+    }
+}   setTimeout(() => {
+    rulesText.setAttribute("style", "display: none;");
+    }, 2000)
 //check if correct 
 function checkCorrectD(questions) {
     var correctChecked = questions[currentQuestion].correct
     if (correctChecked === "D") {
-        console.log("correct!");
+        correctAnswer()
     } else {
-        console.log("wrong!");
+        wrongAnswer()
     }
 }
 function checkCorrectC(questions) {
     var correctChecked = questions[currentQuestion].correct
     if (correctChecked === "C") {
-        console.log("correct!");
+        correctAnswer()
     } else {
-        console.log("wrong!");
+        wrongAnswer()
     }  
 }
 function checkCorrectB(questions) {
     var correctChecked = questions[currentQuestion].correct
     if (correctChecked === "B") {
-        console.log("correct!");
+        correctAnswer()
     } else {
-        console.log("wrong!");
+        wrongAnswer()
     }  
 }
 function checkCorrectA(questions) {
     var correctChecked = questions[currentQuestion].correct
     if (correctChecked === "A") {
-        console.log("correct!");
+        correctAnswer()
     } else {
-        console.log("wrong!");
+        wrongAnswer()
     }  
 }
 //run the quiz
@@ -147,8 +180,8 @@ function runQuiz() {
         console.log("it b click D");
         checkCorrectD(questions)
     })
-    //check if correct
-    
+    //check ending
+
     //display right or wrong
 
     //add to score
@@ -156,7 +189,7 @@ function runQuiz() {
     //update time
 
     //go to next question
-    // currentQuestion++;
+    // 
 
 }
 // click start button to start game
