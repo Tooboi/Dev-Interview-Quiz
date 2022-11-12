@@ -177,6 +177,7 @@ function highScoreScreen() {
     buttonB.setAttribute("style", "display: none;");
     buttonC.setAttribute("style", "display: none;");
     buttonD.setAttribute("style", "display: none;");
+    rightWrong.setAttribute("style", "display: none;");
     scoreBoard.setAttribute("style", "display: block;");
 }
 //check if correct 
