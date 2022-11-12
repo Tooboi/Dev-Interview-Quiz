@@ -27,7 +27,8 @@ var rulesText = document.querySelector("#ruleText");
 var rightWrong = document.querySelector("#rightWrong");
 var scoreBoard = document.querySelector("#scoreBoard");
 var tryAgain = document.querySelector("#tryAgainButt");
-var scoreLink = document.querySelector("#scoreBoardLink")
+var scoreLink = document.querySelector("#scoreBoardLink");
+tryAgain.setAttribute("style", "display: none;");
 scoreBoard.setAttribute("style", "display: none;");
 rulesText.setAttribute("style", "display: block");
 timerUser.textContent = " ";
@@ -170,6 +171,7 @@ function wrongAnswer() {
 }
 function highScoreScreen() {
     h1Question.innerText = "High Scores";
+    startQuiz.setAttribute("style", "display: none;")
     timerUser.setAttribute("style", "display: none;");
     scoreLink.setAttribute("style", "display: none;");
     h1Question.setAttribute("style", "text-align: center;");
@@ -179,6 +181,9 @@ function highScoreScreen() {
     buttonD.setAttribute("style", "display: none;");
     rightWrong.setAttribute("style", "display: none;");
     scoreBoard.setAttribute("style", "display: block;");
+    tryAgain.setAttribute("style", "display: block;");
+    rulesText.setAttribute("style", "display: none;");
+
 }
 //check if correct 
 function checkCorrectD(questions) {
@@ -253,9 +258,3 @@ startQuiz.addEventListener("click", function() {
     runQuiz();
 });
 
-//click try again button
-// tryAgain.addEventListener("click", function() {
-//     console.log("clicked try again");
-//     window.location.href = "./index.html";
-//     runQuiz();
-// });

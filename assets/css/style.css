@@ -47,6 +47,7 @@ header h3 {
   font-weight: var(--fw-regular);
   color: var(--col-p-200);
   transition: all ease-out 300ms;
+  user-select: none;
 }
 header h3:nth-child(1):hover {
   color: var(--col-p-500);
@@ -127,5 +128,12 @@ footer p {
 }
 .scoreArea button {
   cursor: pointer;
+  min-width: 16rem;
+}
+#scoreBoardLink {
+  cursor: pointer;
+}
+#tryAgainButt {
+  margin: 3rem auto 1.5rem;
   min-width: 16rem;
 }
