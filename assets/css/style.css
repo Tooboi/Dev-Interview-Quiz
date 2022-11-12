@@ -72,6 +72,7 @@ main h1 {
 }
 main h2 {
   color: var(--col-p-900);
+  user-select: none;
 }
 main button {
   font-size: 1.25rem;
@@ -105,6 +106,7 @@ footer p {
   list-style: none;
   align-items: center;
   padding-inline-start: 0px;
+  margin: 0 auto;
 }
 #scoreBoard li {
   width: 10ch;

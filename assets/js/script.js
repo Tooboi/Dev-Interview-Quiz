@@ -22,11 +22,13 @@ var buttonB = document.querySelector("#buttB");
 var buttonC = document.querySelector("#buttC");
 var buttonD = document.querySelector("#buttD");
 var h1Question = document.querySelector("#questionVisible");
-var timerUser = document.querySelector("#timerVisible")
-var rulesText = document.querySelector("#ruleText")
-var rightWrong = document.querySelector("#rightWrong")
+var timerUser = document.querySelector("#timerVisible");
+var rulesText = document.querySelector("#ruleText");
+var rightWrong = document.querySelector("#rightWrong");
 var scoreBoard = document.querySelector("#scoreBoard");
 var tryAgain = document.querySelector("#tryAgainButt");
+var scoreLink = document.querySelector("#scoreBoardLink")
+scoreBoard.setAttribute("style", "display: none;");
 rulesText.setAttribute("style", "display: block");
 timerUser.textContent = " ";
 h1Question.textContent = "Press start to test your web dev knowledge";
@@ -116,7 +118,7 @@ function runTimer() {
         // when time is over
         if (timeLeft < 1) {
             window.localStorage.setItem('finalScore', timeLeft)
-            window.location.href = "./highScores.html";
+            highScoreScreen()
             clearInterval(interval);
         }
     }, 1000);
@@ -138,11 +140,13 @@ function correctAnswer() {
     rightWrong.setAttribute("style", "display: block; font-size: 2rem;");
     rightWrong.textContent = "Correct!"
     currentQuestion++;
+    console.log("Question: " + currentQuestion);
     if (currentQuestion === questions.length) {
         window.localStorage.setItem('finalScore', timeLeft)
-        window.location.href = "./highScores.html";
+        highScoreScreen()
+    } else {
+        nextQuestion()
     }
-    nextQuestion()
     setTimeout(() => {
         rightWrong.setAttribute("style", "display: none;");
     }, 3000)
@@ -150,17 +154,31 @@ function correctAnswer() {
 //runs when you choose the wrong answer
 function wrongAnswer() {
     rightWrong.setAttribute("style", "display: block; font-size: 2rem;");
-    rightWrong.textContent = "Wrong!"
+    rightWrong.textContent = "Wrong! -10"
     currentQuestion++;
+    console.log("Question: " + currentQuestion);
     timeLeft -= 10;
-    if (currentQuestion === questions.length) {
+    if (currentQuestion === questions.length) {        
         window.localStorage.setItem('finalScore', timeLeft)
-        window.location.href = "./highScores.html";
+        highScoreScreen()
+    } else {
+        nextQuestion()    
     }
-    nextQuestion()
-}   setTimeout(() => {
+    setTimeout(() => {
     rightWrong.setAttribute("style", "display: none;");
     }, 3000)
+}
+function highScoreScreen() {
+    h1Question.innerText = "High Scores";
+    timerUser.setAttribute("style", "display: none;");
+    scoreLink.setAttribute("style", "display: none;");
+    h1Question.setAttribute("style", "text-align: center;");
+    buttonA.setAttribute("style", "display: none;");
+    buttonB.setAttribute("style", "display: none;");
+    buttonC.setAttribute("style", "display: none;");
+    buttonD.setAttribute("style", "display: none;");
+    scoreBoard.setAttribute("style", "display: block;");
+}
 //check if correct 
 function checkCorrectD(questions) {
     var correctChecked = questions[currentQuestion].correct
@@ -204,7 +222,7 @@ function runQuiz() {
     buttonD.setAttribute("style", "display: block;");
     rulesText.setAttribute("style", "display: none;");
     nextQuestion()
-    console.log("Question: " + currentQuestion);
+    
     //click on answer
     buttonA.addEventListener("click", function() {
         console.log("it b click A");
@@ -222,27 +240,21 @@ function runQuiz() {
         console.log("it b click D");
         checkCorrectD(questions)
     })
-    //check ending
-
-    //display right or wrong
-
-    //add to score
-
-    //update time
-
-    //go to next question
-    // 
-
 }
+scoreLink.addEventListener("click", function() {
+    console.log("clicked score link");
+    highScoreScreen();
+});
 // click start button to start game
 startQuiz.addEventListener("click", function() {
     console.log("clicked start");
     startQuiz.setAttribute("style", "display: none;");
     runQuiz();
 });
+
 //click try again button
-tryAgain.addEventListener("click", function() {
-    console.log("clicked start");
-    window.location.href = "./index.html";
-    runQuiz();
-});
+// tryAgain.addEventListener("click", function() {
+//     console.log("clicked try again");
+//     window.location.href = "./index.html";
+//     runQuiz();
+// });
