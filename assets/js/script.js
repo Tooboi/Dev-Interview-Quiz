@@ -112,18 +112,18 @@ var questions = [
     }
 ]
 //start the timer
-function runTimer() {
-    var interval = setInterval(function() {
-        timerUser.textContent = "Time: " + timeLeft;
-        timeLeft--;
-        // when time is over
-        if (timeLeft < 1) {
-            window.localStorage.setItem('finalScore', timeLeft)
-            highScoreScreen()
-            clearInterval(interval);
-        }
-    }, 1000);
-}
+// function runTimer() {
+//     var interval = setInterval(function() {
+//         timerUser.textContent = "Time: " + timeLeft;
+//         timeLeft--;
+//         // when time is over
+//         if (timeLeft < 1) {
+//             window.localStorage.setItem('finalScore', timeLeft)
+//             highScoreScreen()
+//             clearInterval(interval);
+//         }
+//     }, 1000);
+// }
 //sets the next question as the next currentQuestion integer
 function nextQuestion() {
  showQuestion(questions[currentQuestion]);
@@ -150,7 +150,7 @@ function correctAnswer() {
     }
     setTimeout(() => {
         rightWrong.setAttribute("style", "display: none;");
-    }, 3000)
+    }, 2000)
 }
 //runs when you choose the wrong answer
 function wrongAnswer() {
@@ -167,7 +167,7 @@ function wrongAnswer() {
     }
     setTimeout(() => {
     rightWrong.setAttribute("style", "display: none;");
-    }, 3000)
+    }, 2000)
 }
 function highScoreScreen() {
     h1Question.innerText = "High Scores";
@@ -183,7 +183,6 @@ function highScoreScreen() {
     scoreBoard.setAttribute("style", "display: block;");
     tryAgain.setAttribute("style", "display: block;");
     rulesText.setAttribute("style", "display: none;");
-
 }
 //check if correct 
 function checkCorrectD(questions) {
@@ -220,13 +219,30 @@ function checkCorrectA(questions) {
 }
 //run the quiz
 function runQuiz() {
-    runTimer();
+    //run the timer
+    var interval = setInterval(function() {
+        timerUser.textContent = "Time: " + timeLeft;
+        timeLeft--;
+        console.log("time left: " + timeLeft);
+        // when time is over
+        if (timeLeft < 1) {
+            window.localStorage.setItem('finalScore', timeLeft);
+            interval.reset()
+            highScoreScreen();
+            clearInterval(interval);
+        }
+    }, 1000);
     console.log("runQuiz has run");
     buttonA.setAttribute("style", "display: block;");
     buttonB.setAttribute("style", "display: block;");
     buttonC.setAttribute("style", "display: block;");
     buttonD.setAttribute("style", "display: block;");
     rulesText.setAttribute("style", "display: none;");
+    scoreBoard.setAttribute("style", "display: none;");
+    tryAgain.setAttribute("style", "display: none;");
+    h1Question.setAttribute("style", "text-align: left;");
+    scoreLink.setAttribute("style", "display: block;");
+    timerUser.setAttribute("style", "display: block;");
     nextQuestion()
     
     //click on answer
@@ -255,6 +271,11 @@ scoreLink.addEventListener("click", function() {
 startQuiz.addEventListener("click", function() {
     console.log("clicked start");
     startQuiz.setAttribute("style", "display: none;");
+    runQuiz();
+});
+tryAgain.addEventListener("click", function() {
+    console.log("clicked try again");
+    timeLeft = 120;
     runQuiz();
 });
 
