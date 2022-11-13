@@ -28,6 +28,7 @@ var rightWrong = document.querySelector("#rightWrong");
 var scoreBoard = document.querySelector("#scoreBoard");
 var tryAgain = document.querySelector("#tryAgainButt");
 var scoreLink = document.querySelector("#scoreBoardLink");
+//set initial styles
 tryAgain.setAttribute("style", "display: none;");
 scoreBoard.setAttribute("style", "display: none;");
 rulesText.setAttribute("style", "display: block");
@@ -39,11 +40,21 @@ buttonA.setAttribute("style", "display: none;");
 buttonB.setAttribute("style", "display: none;");
 buttonC.setAttribute("style", "display: none;");
 buttonD.setAttribute("style", "display: none;");
+//score area
+var highScoreQuantity = 2;
+var HIGH_SCORES = 'highScores';
+var highScoreString = localStorage.getItem(HIGH_SCORES);
+
+function checkHighScore(score) {
+    highScores = JSON.parse(highScoreString) ?? [];
+    var lowestScore = highScores[highScoreQuantity - 1]?.score ?? 0;
+    if (score > lowestScore) {
+        saveHighScore(score, highScores);
+        showHighScore();
+    }
+}
+
 var timeLeft = 120;
-var score = {
-    playerName: [],
-    playerScore: []
-};
 var currentQuestion = 0;
 var questions = [
     {
@@ -111,19 +122,6 @@ var questions = [
         correct: "B"
     }
 ]
-//start the timer
-// function runTimer() {
-//     var interval = setInterval(function() {
-//         timerUser.textContent = "Time: " + timeLeft;
-//         timeLeft--;
-//         // when time is over
-//         if (timeLeft < 1) {
-//             window.localStorage.setItem('finalScore', timeLeft)
-//             highScoreScreen()
-//             clearInterval(interval);
-//         }
-//     }, 1000);
-// }
 //sets the next question as the next currentQuestion integer
 function nextQuestion() {
  showQuestion(questions[currentQuestion]);
@@ -232,6 +230,7 @@ function runQuiz() {
             clearInterval(interval);
         }
     }, 1000);
+    currentQuestion = 0;
     console.log("runQuiz has run");
     buttonA.setAttribute("style", "display: block;");
     buttonB.setAttribute("style", "display: block;");
