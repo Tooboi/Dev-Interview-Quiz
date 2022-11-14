@@ -49,9 +49,16 @@ function checkHighScore(score) {
     highScores = JSON.parse(highScoreString) ?? [];
     var lowestScore = highScores[highScoreQuantity - 1]?.score ?? 0;
     if (score > lowestScore) {
+        var playerName = window.prompt("High score! Enter name:");
         saveHighScore(score, highScores);
         showHighScore();
     }
+}
+function saveHighScore(score, highScores) {
+    highScores.push(newScore); //add to list
+    highScores.sort((a, b) => b.score - a.score); //sort list
+    highScores.splice(highScoreQuantity); //select new list
+    localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores)); //save to local storage
 }
 
 var timeLeft = 120;
@@ -181,6 +188,21 @@ function highScoreScreen() {
     scoreBoard.setAttribute("style", "display: block;");
     tryAgain.setAttribute("style", "display: block;");
     rulesText.setAttribute("style", "display: none;");
+    highScores.map((score) => `<li>${score.score} — ${score.name}`);
+    scoreBoard.innerHTML = highScores.map((score) => `<li>${score.score} - ${score.name}`);
+}
+//run this when we initialize the game and every time there is a new high score
+function showHighScores() {
+    const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
+    const highScoreList = document.getElementById(HIGH_SCORES);
+    
+    highScoreList.innerHTML = highScores
+      .map((score) => `<li>${score.score} - ${score.name}`)
+      .join('');
+  }
+function gameOver() {
+    checkHighScore(account.score);
+    showHighScores()
 }
 //check if correct 
 function checkCorrectD(questions) {
@@ -218,7 +240,7 @@ function checkCorrectA(questions) {
 //run the quiz
 function runQuiz() {
     //run the timer
-    var interval = setInterval(function() {
+    var interval = setInterval(function() { 
         timerUser.textContent = "Time: " + timeLeft;
         timeLeft--;
         console.log("time left: " + timeLeft);
@@ -261,6 +283,7 @@ function runQuiz() {
         console.log("it b click D");
         checkCorrectD(questions)
     })
+    gameOver();
 }
 scoreLink.addEventListener("click", function() {
     console.log("clicked score link");
