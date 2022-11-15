@@ -26,10 +26,8 @@ var timerUser = document.querySelector("#timerVisible");
 var rulesText = document.querySelector("#ruleText");
 var rightWrong = document.querySelector("#rightWrong");
 var scoreBoard = document.querySelector("#scoreBoard");
-var tryAgain = document.querySelector("#tryAgainButt");
 var scoreLink = document.querySelector("#scoreBoardLink");
 //set initial styles
-tryAgain.setAttribute("style", "display: none;");
 scoreBoard.setAttribute("style", "display: none;");
 rulesText.setAttribute("style", "display: block");
 timerUser.textContent = " ";
@@ -42,9 +40,6 @@ buttonC.setAttribute("style", "display: none;");
 buttonD.setAttribute("style", "display: none;");
 //score area
 
-
-
-var playerCount = 0;
 var timeLeft = 120;
 var currentQuestion = 0;
 var questions = [
@@ -81,11 +76,11 @@ var questions = [
         correct: "D"
     },
     {
-        asking: "What does HTML stand for?",
-        optionA: "Hypertext Markup Language",
-        optionB: "Handy Text Maximum Language",
-        optionC: "How The Moon Looks",
-        optionD: "Hierarchy Toned Making Linguistics",
+        asking: "What surrounds an array?",
+        optionA: "[ ]",
+        optionB: "{ }",
+        optionC: "( )",
+        optionD: "< >",
         correct: "A"
     },
     {
@@ -153,7 +148,6 @@ function wrongAnswer() {
     if (currentQuestion === questions.length) {        
         window.localStorage.setItem('finalScore', timeLeft)
         var nameOfPlayer = window.prompt("Nice job! Please enter your initials (ABC)");
-        console.log(nameOfPlayer);
         window.localStorage.setItem('name', nameOfPlayer);
         highScoreScreen()
     } else {
@@ -164,11 +158,10 @@ function wrongAnswer() {
     }, 2000)
 }
 function highScoreScreen() {
+    var finalName = window.localStorage.getItem('name')
+    var finalScore = window.localStorage.getItem('finalScore')
     var list1 = document.querySelector("#li1");
-    var list2 = document.querySelector("#li2");
-    var list3 = document.querySelector("#li3");
-    var list4 = document.querySelector("#li4");
-    h1Question.innerText = "High Scores"
+    h1Question.innerText = "High Score"
     startQuiz.setAttribute("style", "display: none;")
     timerUser.setAttribute("style", "display: none;");
     scoreLink.setAttribute("style", "display: none;");
@@ -179,21 +172,10 @@ function highScoreScreen() {
     buttonD.setAttribute("style", "display: none;");
     rightWrong.setAttribute("style", "display: none;");
     scoreBoard.setAttribute("style", "display: block;");
-    tryAgain.setAttribute("style", "display: block;");
     rulesText.setAttribute("style", "display: none;");
-    // var scoreFinal = window.localStorage.getItem('finalScore')
-    // window.localStorage.setItem('user', JSON.stringify(player));
-    // var finalPlayerContent = JSON.parse(window.localStorage.getItem('player'));
-    list1.innerText = correctAnswer.nameOfPlayer + correctAnswer.finalScore
-    // var newSingleScore = document.createTextNode(nameOfPlayer + );
-    // singleScore
-    // singleScore = ;
-}
-function addScoreItem() {
-    // var newSingleScoreText = document.createTextNode(finalPlayerContent);
-    // singleScore.appendChild(newSingleScoreText);
-    // var listItem = document.getElementById('scoreBoard');
-    // document.body.insertBefore(singleScore, listItem);
+    console.log(finalName + finalScore);
+    list1.textContent = finalName + ' - ' + finalScore;
+
 }
 //check if correct 
 function checkCorrectD(questions) {
@@ -256,7 +238,6 @@ function runQuiz() {
     buttonD.setAttribute("style", "display: block;");
     rulesText.setAttribute("style", "display: none;");
     scoreBoard.setAttribute("style", "display: none;");
-    tryAgain.setAttribute("style", "display: none;");
     h1Question.setAttribute("style", "text-align: left;");
     scoreLink.setAttribute("style", "display: block;");
     timerUser.setAttribute("style", "display: block;");
@@ -291,9 +272,5 @@ startQuiz.addEventListener("click", function() {
     startQuiz.setAttribute("style", "display: none;");
     runQuiz();
 });
-tryAgain.addEventListener("click", function() {
-    console.log("clicked try again");
-    timeLeft = 120;
-    runQuiz();
-});
+
 
